@@ -29,8 +29,8 @@ public class ConstructorTest {
     @DisplayName("switchBunTest")
     @Description("Тест: переключение на меню \"Булки\"")
     public void switchBunTest() {
-        page.selectElementAndClick(MainPage.selectFillings);
-        page.selectElementAndClick(MainPage.selectBuns);
+        MainPage.selectElementAndClick(MainPage.selectFillings);
+        MainPage.selectElementAndClick(MainPage.selectBuns);
         Assert.assertTrue( driver.findElement(MainPage.menuBuns).isDisplayed());
 
 
@@ -40,7 +40,7 @@ public class ConstructorTest {
     @DisplayName("switchFillingsTest")
     @Description("Тест: переключение на меню \"Начинки\"")
     public void switchFillingsTest() {
-        page.selectElementAndClick(MainPage.selectFillings);
+        MainPage.selectElementAndClick(MainPage.selectFillings);
         Assert.assertTrue(driver.findElement(MainPage.menuFillings).isDisplayed());
     }
 
@@ -50,7 +50,7 @@ public class ConstructorTest {
     @DisplayName("switchSouseTest")
     @Description("Тест: переключение на элемент \"Соусы\"")
     public void switchSouseTest() {
-        page.selectElementAndClick(MainPage.selectSauces);
+        MainPage.selectElementAndClick(MainPage.selectSauces);
         Assert.assertTrue(driver.findElement(MainPage.menuSauces).isDisplayed());
     }
 

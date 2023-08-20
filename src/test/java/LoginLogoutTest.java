@@ -74,7 +74,7 @@ public class LoginLogoutTest {
         Assert.assertEquals("Вход", page.waitForElement(LoginPage.headerLogin));
         pageLogin.goToRegistrationPage();
         Assert.assertEquals("Регистрация", page.waitForElement(RegistrationPage.headerRegistration));
-        page.selectElementAndClick(RegistrationPage.linkLoginRegistrationPage);
+        MainPage.selectElementAndClick(RegistrationPage.linkLoginRegistrationPage);
         pageLogin.login(email, password);
         Assert.assertEquals("Соберите бургер", page.waitForElement(MainPage.headerMakeBurger));
 
@@ -89,9 +89,9 @@ public class LoginLogoutTest {
         pageLogin.waitForLoadLoginPage();
         Assert.assertEquals("Вход", page.waitForElement(LoginPage.headerLogin));
         // ссылка восстановить пароль
-        page.selectElementAndClick(LoginPage.linkPasswordRecovery);
+        MainPage.selectElementAndClick(LoginPage.linkPasswordRecovery);
         Assert.assertEquals("Восстановление пароля", page.waitForElement(MainPage.headerPasswordRecovery));
-        page.selectElementAndClick(MainPage.linkLoginForgotPasswordPage);
+        MainPage.selectElementAndClick(MainPage.linkLoginForgotPasswordPage);
         pageLogin.login(email, password);
         Assert.assertEquals("Соберите бургер", page.waitForElement(MainPage.headerMakeBurger));
 

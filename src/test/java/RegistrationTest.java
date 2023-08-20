@@ -14,6 +14,7 @@
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
+import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,7 +24,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import pageobject.LoginPage;
 import pageobject.MainPage;
 import pageobject.RegistrationPage;
-
+import pojo.Login;
+import static org.hamcrest.Matchers.*;
 
 public class RegistrationTest {
 
@@ -35,19 +37,19 @@ public class RegistrationTest {
     String email = TestData.email;
     String password = TestData.password;
     String passwordIncorrect = TestData.passwordIncorrect ;
+    Login loginData;
+    Response response;
 
     @Before
     public void setUp() {
 
-       // SetUpDriver.setYandexDriver();
+        SetUpDriver.setYandexDriver();
 
         driver = new ChromeDriver();
         driver.get("https://stellarburgers.nomoreparties.site/");
         page = new MainPage(driver);
         pageLogin = new LoginPage(driver);
         pageReg = new RegistrationPage(driver);
-
-
     }
 
     @Test
@@ -65,7 +67,7 @@ public class RegistrationTest {
         pageReg.registration(name,email, password);
         page.waitForElement(LoginPage.headerLogin); // перешли на страницу Вход,
         Assert.assertEquals("Вход", page.waitForElement(LoginPage.headerLogin));
-    }
+       }
 
     @Test
     @DisplayName("registrationWithNotCorrectPasswordTest")
@@ -85,7 +87,21 @@ public class RegistrationTest {
 
     @After
     public void powerOff() {
+
         driver.quit();
+        loginData = new Login(email, password);
+        response = Api.loginUser(loginData);
+        String accessToken = Api.getAccessToken(response);
+        if (accessToken != null) {
+            Response responseDelData = Api.deleteUser(accessToken);
+            responseDelData.then()
+                    .assertThat()
+                    .statusCode(202)
+                    .body("success", is(true))
+                    .body("message", equalTo("User successfully removed"));
+
+        }
+
     }
 
 }
